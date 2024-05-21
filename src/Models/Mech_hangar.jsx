@@ -1,15 +1,153 @@
-import React, { useRef,useEffect } from 'react'
-import { useGLTF } from '@react-three/drei'
-import {useFrame,useThree} from '@react-three/fiber'
-import {a} from '@react-spring/three'
+import React, { useRef, useEffect } from 'react';
+import { useGLTF } from '@react-three/drei';
+import { useFrame, useThree } from '@react-three/fiber';
+import { a } from '@react-spring/three';
 
-import mech_hangarScene from '../assets/3d/mech_hangar.glb'
+import mech_hangarScene from '../assets/3d/mech_hangar.glb';
 
-const mech_hangar = (props)=> {
+const mech_hangar = ({ isRotating, setIsRotating, isScrolling, setIsScrolling, setCurrentStage, ...props }) => {
   const mech_hangarRef = useRef();
-  const { nodes, materials } = useGLTF(mech_hangarScene)
+  const { gl, viewport } = useThree();
+  const { nodes, materials } = useGLTF(mech_hangarScene);
+
+  const lastX = useRef(0);
+  const rotationSpeed = useRef(0);
+  const dampingFactor = 0.95;
+
+  const handlePointerDown = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setIsRotating(true);
+
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+
+    lastX.current = clientX;
+  };
+
+  const handlePointerUp = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setIsRotating(false);
+  };
+
+  const handlePointerMove = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    if (isRotating) {
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+
+      const delta = (clientX - lastX.current) / viewport.width;
+
+      mech_hangarRef.current.rotation.y += delta * 0.01 * Math.PI;
+      lastX.current = clientX;
+      rotationSpeed.current = delta * 0.009 * Math.PI;
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'ArrowLeft') {
+      if (!isRotating) setIsRotating(true);
+      mech_hangarRef.current.rotation.y += 0.01 * Math.PI;
+      rotationSpeed.current = 0.0125;
+    } else if (e.key === 'ArrowRight') {
+      if (!isRotating) setIsRotating(true);
+      mech_hangarRef.current.rotation.y -= 0.01 * Math.PI;
+      rotationSpeed.current = -0.0125;
+    }
+  };
+
+  const handleKeyUp = (e) => {
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') setIsRotating(false);
+  };
+
+  const handleWheel = (e) => {
+    const rotationSpeed = 0.75; // Adjust the rotation speed as needed
+    const targetDelta = e.deltaY > 0 ? 1 : -1; // Adjust the direction and angle as needed
+
+    smoothRotate(targetDelta * rotationSpeed);
+  };
+
+  const smoothRotate = (targetDelta) => {
+    if (!isScrolling) {
+      setIsScrolling(true);
+
+      const startTime = performance.now();
+      const startRotation = mech_hangarRef.current.rotation.y;
+
+      const updateRotation = (currentTime) => {
+        const elapsedTime = currentTime - startTime;
+        const progress = Math.min(elapsedTime / 500, 1); // Adjust duration as needed
+        const delta = targetDelta * progress;
+
+        mech_hangarRef.current.rotation.y = startRotation + delta;
+
+        if (progress < 1) {
+          requestAnimationFrame(updateRotation);
+        } else {
+          setIsScrolling(false);
+        }
+      };
+
+      requestAnimationFrame(updateRotation);
+    }
+  };
+
+  useFrame(() => {
+    if (!isRotating && !isScrolling) {
+      rotationSpeed.current *= dampingFactor;
+
+      if (Math.abs(rotationSpeed.current) < 0.001) {
+        rotationSpeed.current = 0;
+      }
+      mech_hangarRef.current.rotation.y += rotationSpeed.current;
+    } else {
+      const rotation = mech_hangarRef.current.rotation.y;
+
+      const normalizedRotation =
+        ((rotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+
+      // Set the current stage based on the model's orientation
+      switch (true) {
+        case normalizedRotation >= 5.45 && normalizedRotation <= 5.85:
+          setCurrentStage(4);
+          break;
+        case normalizedRotation >= 0.85 && normalizedRotation <= 1.3:
+          setCurrentStage(3);
+          break;
+        case normalizedRotation >= 2.4 && normalizedRotation <= 2.6:
+          setCurrentStage(2);
+          break;
+        case normalizedRotation >= 4.25 && normalizedRotation <= 4.75:
+          setCurrentStage(1);
+          break;
+        default:
+          setCurrentStage(null);
+      }
+    }
+  });
+
+  useEffect(() => {
+    const canvas = gl.domElement;
+    canvas.addEventListener('pointerdown', handlePointerDown);
+    canvas.addEventListener('pointerup', handlePointerUp);
+    canvas.addEventListener('pointermove', handlePointerMove);
+    window.addEventListener('wheel', handleWheel);
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('keyup', handleKeyUp);
+
+    return () => {
+      canvas.removeEventListener('pointerdown', handlePointerDown);
+      canvas.removeEventListener('pointerup', handlePointerUp);
+      canvas.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('wheel', handleWheel);
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('keyup', handleKeyUp);
+    };
+  }, [gl, handlePointerDown, handlePointerUp, handlePointerMove]);
+
   return (
-    <a.group ref = {mech_hangarRef}{...props} >
+<a.group ref = {mech_hangarRef}{...props} >
       <group scale={0.01}>
         <mesh
           geometry={nodes.Cube054_Railing_0.geometry}
@@ -2459,7 +2597,8 @@ const mech_hangar = (props)=> {
         />
       </group>
     </a.group>
-  )
-}
+  );
+};
 
 export default mech_hangar;
+

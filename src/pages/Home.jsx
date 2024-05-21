@@ -1,7 +1,5 @@
 import { useState,Suspense,lazy} from 'react';
 const Canvas = lazy(() => import('@react-three/fiber').then(module => ({ default: module.Canvas })));
-
-const Motherless_smp_town = lazy(()=>import('../Models/Motherless_smp_town'))
 const Spacecraft = lazy(()=>import('../Models/Spacecraft'))
 const Sky_pano = lazy(()=>import('../Models/Sky_pano'))
 const Loader = lazy(()=>import('../components/Loader'))
@@ -32,24 +30,43 @@ const Home = () => {
     return [screenScale, screenPosition, screenRotation];
   }
 
+  const adjustMech_hangar = () =>{
+
+    let screenScale = null;
+    let screenPosition = null;
+    let screenRotation =[0,4.7,3.1];
+
+    if(window.innerWidth < 950){
+      screenScale = [-2.5, -2.5, -2.5];
+      screenPosition=[1, -15, -70];
+    }
+    else{
+      screenScale = [-5.2,-5.2,-4.2];
+      screenPosition=[1.2,-29, -95];
+    }
+
+    return [screenScale, screenPosition, screenRotation];
+  }
+
   const adjustSpacecraft = () =>{
 
     let screenScale ,screenPosition ;
-    let screenRotation =[0.3,3.2,-.1];
+    let screenRotation =[0.,3.2,-.1];
 
     if(window.innerWidth < 900){
-      screenScale = [0.001, 0.001, 0.001];
-      screenPosition = [];
+      screenScale = [0.007, 0.007, 0.007];
+      screenPosition = [-.0,.01,4.8];
     }
     else{
-      screenScale = [0.007,0.007,0.007];
-      screenPosition=[-.07,.03,4.7];
+      screenScale = [0.004,0.004,0.004];
+      screenPosition=[-.02,-.03,4.8];
     }
 
     return [screenScale, screenPosition, screenRotation];
   }
 
   const [MinecraftScale, MinecraftPosition, MinecraftRotation] = adjustMinecraft();
+  const [Mech_hangarScale, Mech_hangarPosition, Mech_hangarRotation] = adjustMech_hangar();
   const [SpacecraftScale,SpacecraftPosition,SpacecraftRotation] = adjustSpacecraft();
 
   return (
@@ -67,14 +84,14 @@ const Home = () => {
         <ambientLight intensity={.51} />
         <hemisphereLight skyColor="#b1e1ff" groundColor="#000000" intensity={.7} />
 
-        <Spacecraft 
+        {/* <Spacecraft 
 
           position={SpacecraftPosition}
           scale={SpacecraftScale}
           rotation={SpacecraftRotation}
           isRotating={isRotating}
           isScrolling={isScrolling}
-        />
+        /> */}
 
         <Sky_pano 
           
@@ -85,21 +102,18 @@ const Home = () => {
         
         />
 
-        {/* < Motherless_smp_town 
+        <Mech_hangar
 
-          position={MinecraftPosition}
-          scale={MinecraftScale}
-          rotation={MinecraftRotation}
-          isRotating={isRotating}
-          setIsRotating={setIsRotating}
-          currentStage={currentStage}
-          setCurrentStage={setCurrentStage}
-          isScrolling={isScrolling}
-          setIsScrolling={setIsScrolling}
-        
-        /> */}
-
-        <Mech_hangar/>
+         position={Mech_hangarPosition}
+         scale={Mech_hangarScale}
+         rotation={Mech_hangarRotation}
+         isRotating={isRotating}
+         setIsRotating={setIsRotating}
+         currentStage={currentStage}
+         setCurrentStage={setCurrentStage}
+         isScrolling={isScrolling}
+         setIsScrolling={setIsScrolling}
+        />
       </Suspense>
      </Canvas>
 
