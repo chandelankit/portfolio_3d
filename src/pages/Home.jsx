@@ -6,6 +6,7 @@ const Spacecraft = lazy(()=>import('../Models/Spacecraft'))
 const Sky_pano = lazy(()=>import('../Models/Sky_pano'))
 const Loader = lazy(()=>import('../components/Loader'))
 const HomeInfo = lazy(()=>import('../components/HomeInfo'))
+const Mech_hangar = lazy(()=>import('../Models/Mech_hangar'))
 
 
 const Home = () => {
@@ -84,7 +85,7 @@ const Home = () => {
         
         />
 
-        < Motherless_smp_town 
+        {/* < Motherless_smp_town 
 
           position={MinecraftPosition}
           scale={MinecraftScale}
@@ -96,7 +97,9 @@ const Home = () => {
           isScrolling={isScrolling}
           setIsScrolling={setIsScrolling}
         
-        />
+        /> */}
+
+        <Mech_hangar/>
       </Suspense>
      </Canvas>
 
