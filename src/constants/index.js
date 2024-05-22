@@ -155,7 +155,7 @@ export const projects = [
         name: '3D Portfolio ',
         description: 'Developed a web application that tracks and notifies users of price changes for products on Amazon, helping users find the best deals.',
         techStack: 'React,Three JS,Email JS,HTML,CSS,JS',
-        gitLink: 'https://github.com/chandelankit/3d_portfolio',
+        gitLink: 'https://github.com/chandelankit/portfolio_3d',
     },
     {
         iconUrl: bin2Bite,
