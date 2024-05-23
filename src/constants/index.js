@@ -112,7 +112,7 @@ export const experiences = [
         company_name: "IIIT,Kota",
         icon: iiitkota,
         iconBg: "#accbe1",
-        date: "March 2020 - April 2021",
+        date: "16 Feb 2024 - 18 Feb 2024",
         points: [
             "Lead the team for a web project which aimed to seamlessly connect people and institutions for donating and getting food on the fly.",
             "Secured third runner up position.",
@@ -123,7 +123,7 @@ export const experiences = [
         company_name: "",
         icon: googlepng,
         iconBg: "#fbc3bc",
-        date: "Jan 2021 - Feb 2022",
+        date: "Jan 2024 - June 2024",
         points: [
             "Made a project under the zero hunger domain with a team of four.It is a full stack project which seamlessly connects donor of the food and the institutions needing it.It contains live graph showing location of the user and also filters to find the nearest food.",
         ],
