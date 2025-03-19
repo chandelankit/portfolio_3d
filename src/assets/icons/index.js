@@ -28,6 +28,7 @@ import soundon from './soundon.png'
 import soundoff from './soundoff.png'
 import signature3dicon from './signature3dicon.jpg'
 import bin2Bite from './bin2Bite.jpg'
+import five_min_logo from './five_min_logo.jpg'
 
 export {
     css,
@@ -59,5 +60,6 @@ export {
     soundon,
     soundoff,
     signature3dicon,
-    bin2Bite
+    bin2Bite,
+    five_min_logo
 }

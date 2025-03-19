@@ -25,7 +25,8 @@ import {
     tailwindcss,
     threads,
     typescript,
-    bin2Bite
+    bin2Bite,
+    five_min_logo
 } from "../assets/icons";
 
 export const skills = [
@@ -156,6 +157,17 @@ export const projects = [
         description: 'Developed a web application that tracks and notifies users of price changes for products on Amazon, helping users find the best deals.',
         techStack: 'React,Three JS,Email JS,HTML,CSS,JS',
         gitLink: 'https://github.com/chandelankit/portfolio_3d',
+        liveLink: 'https://portfolio-3d-eta.vercel.app/'
+    },
+    {
+        iconUrl: five_min_logo,
+        theme: 'btn-back-blue',
+        name: '5min-read',
+        description: "A full stack project build for students and professionals to enjoy the purest news reading experience without going through the distracting social media or overwhelming news websites.It uses puppeteer to scrap data from renowned news web apps and displays them in the most amazing way. Also the news keeps on getting updated every 12 hours and hence stays relevant. It also helps in storage management as the database never gets filled with outdated news. The web app gives the user an option to share their opinions on the pressing issue and get heard.",
+        techStack: 'Next.js,Puppeteer,MongoDB,GitHub Actions Workflow',
+        gitLink: 'https://github.com/chandelankit/5minread',
+        liveLink: 'https://5min-read.vercel.app/'
+
     },
     {
         iconUrl: bin2Bite,
@@ -165,7 +177,8 @@ export const projects = [
         techStack: 'React,Typescript,Node JS, MongoDB,Mongoose,Material UI,Shadcn UI,Aceternity UI',
         gitLink: 'https://github.com/devanshgupta08/Hungry',
 
-    }
+    },
+
 ];
 
 export default indexedDB;
