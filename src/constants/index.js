@@ -164,7 +164,7 @@ export const projects = [
         theme: 'btn-back-blue',
         name: '5min-read',
         description: "A full-stack web application designed for students and professionals to enjoy a distraction-free news-reading experience, eliminating the clutter of social media and overwhelming news websites. It leverages Puppeteer to scrape news from renowned sources, presenting it in a clean, engaging interface. The content updates every 12 hours, ensuring relevance while optimizing storage by removing outdated news. Users can also share their opinions on key issues, fostering meaningful discussions.",
-        techStack: 'Next.js,Puppeteer,MongoDB,GitHub Actions Workflow',
+        techStack: 'Next.js,Puppeteer,MongoDB,GitHub Actions Workflow,Next Auth',
         gitLink: 'https://github.com/chandelankit/5minread',
         liveLink: 'https://5min-read.vercel.app/'
 
