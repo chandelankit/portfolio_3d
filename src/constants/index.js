@@ -163,7 +163,7 @@ export const projects = [
         iconUrl: five_min_logo,
         theme: 'btn-back-blue',
         name: '5min-read',
-        description: "A full stack project build for students and professionals to enjoy the purest news reading experience without going through the distracting social media or overwhelming news websites.It uses puppeteer to scrap data from renowned news web apps and displays them in the most amazing way. Also the news keeps on getting updated every 12 hours and hence stays relevant. It also helps in storage management as the database never gets filled with outdated news. The web app gives the user an option to share their opinions on the pressing issue and get heard.",
+        description: "A full-stack web application designed for students and professionals to enjoy a distraction-free news-reading experience, eliminating the clutter of social media and overwhelming news websites. It leverages Puppeteer to scrape news from renowned sources, presenting it in a clean, engaging interface. The content updates every 12 hours, ensuring relevance while optimizing storage by removing outdated news. Users can also share their opinions on key issues, fostering meaningful discussions.",
         techStack: 'Next.js,Puppeteer,MongoDB,GitHub Actions Workflow',
         gitLink: 'https://github.com/chandelankit/5minread',
         liveLink: 'https://5min-read.vercel.app/'
